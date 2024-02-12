@@ -1,17 +1,17 @@
 <nav class="p-3 bg-black">
-<div class="container text-center text-white">
+<div class="container text-center">
   <div class="row">
     <div class="col-md-3">
-      <button class="btn">Home</button>
+      <button class="btn text-white" [routerLink]="'/'">Home</button>
     </div>
     <div class="col-md-3">
-      <button class="btn">Task</button>
+      <button class="btn text-white" (click)="goToRoute('task')">Task</button>
     </div>
     <div class="col-md-3">
-      <button class="btn">Profile</button>
+      <button class="btn text-white" (click)="goToRoute('profilo')">Profile</button>
     </div>
     <div class="col-md-3">
-      <button class="btn">Login/Signup</button>
+      <button class="btn text-white" [routerLink]="'/form'">Login/Signup</button>
     </div>
   </div>
 </div>
