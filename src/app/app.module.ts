@@ -4,29 +4,34 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { ProfiloComponent } from './components/profilo/profilo.component';
 import { GiornoComponent } from './components/giorno/giorno.component';
 import { EventoComponent } from './components/evento/evento.component';
-import { FormComponent } from './components/form/form.component';
-import { TaskComponent } from './components/task/task.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { ToastrModule, provideToastr } from 'ngx-toastr';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ProfiloComponent,
     GiornoComponent,
     EventoComponent,
-    FormComponent,
-    TaskComponent
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    })
   ],
-  providers: [],
+  providers: [ provideAnimations(),
+    provideToastr(),],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
