@@ -1,14 +1,14 @@
-<nav class="p-3 bg-black">
+<nav class="p-4 bg-black">
 <div class="container text-center">
   <div class="row">
     <div class="col-md-3">
       <button class="btn text-white" [routerLink]="'/'">Home</button>
     </div>
     <div class="col-md-3">
-      <button class="btn text-white" (click)="goToRoute('task')">Task</button>
+      <button class="btn text-white" (click)="goToRoute('task')" *ngIf="isAuthenticated">Task</button>
     </div>
     <div class="col-md-3">
-      <button class="btn text-white" (click)="goToRoute('profilo')">Profile</button>
+      <button class="btn text-white" (click)="goToRoute('profilo')" *ngIf="isAuthenticated">Profile</button>
     </div>
     <div class="col-md-3">
       <button class="btn text-white" [routerLink]="'/form'">Login/Signup</button>

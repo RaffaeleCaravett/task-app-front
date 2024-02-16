@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { AuthGuard } from './core/auth.guard';
 
 const routes: Routes = [
 {
@@ -9,11 +10,11 @@ const routes: Routes = [
 },
 {
   path:'profilo/:id',
-  loadChildren: () => import('./components/profilo/profilo.module').then(m => m.ProfiloModule)
+  loadChildren: () => import('./components/profilo/profilo.module').then(m => m.ProfiloModule),canActivate:[AuthGuard]
 },
 {
   path:'task/:id',
-  loadChildren: () => import('./components/task/task.module').then(m => m.TaskModule)
+  loadChildren: () => import('./components/task/task.module').then(m => m.TaskModule),canActivate:[AuthGuard]
 },
 {
   path:'form',
