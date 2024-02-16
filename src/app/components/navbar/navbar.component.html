@@ -11,7 +11,8 @@
       <button class="btn text-white" (click)="goToRoute('profilo')" *ngIf="isAuthenticated">Profile</button>
     </div>
     <div class="col-md-3">
-      <button class="btn text-white" [routerLink]="'/form'">Login/Signup</button>
+      <button class="btn text-white" [routerLink]="'/form'" *ngIf="!isAuthenticated">Login/Signup</button>
+      <button class="btn text-white" [routerLink]="'/form'" *ngIf="isAuthenticated" (click)="logout()">Logout</button>
     </div>
   </div>
 </div>

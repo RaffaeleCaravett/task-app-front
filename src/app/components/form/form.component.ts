@@ -45,11 +45,12 @@ logIn(){
     }).subscribe({
     next: (tokens:any)=>{
 if(tokens){
+  console.log(tokens.tokens)
   this.authService.token=tokens.tokens.accessToken
   this.authService.refreshToken=tokens.tokens.refreshToken
   this.authService.authenticateUser(true)
   localStorage.setItem('accessToken',this.authService.token)
-  localStorage.setItem('refreshtoken',this.authService.refreshToken)
+  localStorage.setItem('refreshToken',this.authService.refreshToken)
   this.authService.verifyToken(this.authService.token).subscribe((data:any)=>{
     if(data){
       localStorage.setItem('user',JSON.stringify(data))

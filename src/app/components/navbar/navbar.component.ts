@@ -23,4 +23,11 @@ isAuthenticated:boolean=false
     this.router.navigate([`/${route}`,0])
 this.isAuthenticated=this.authGuard.isAuthenticated
   }
+  logout(){
+    localStorage.clear()
+    this.authService.authenticateUser(false)
+    this.authService.setToken('')
+    this.authService.setRefreshToken('')
+    this.router.navigate(['/home'])
+  }
 }
