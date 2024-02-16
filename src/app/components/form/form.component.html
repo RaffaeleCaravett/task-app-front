@@ -1,7 +1,7 @@
 <div class="container text-center">
   <div class="row bg my-5 rounded border shadow-lg">
    <!--login -->
-    <form *ngIf="section=='login'" class="p-0">
+    <form *ngIf="section=='login'" [formGroup]="login" class="p-0">
     <div class="col-md-12 py-5">
           <h1>Benvenuto nella sezione dei form</h1>
           <h2 >Login</h2>
@@ -10,25 +10,27 @@
 <div class="row">
   <div class="col-md-6 d-flex flex-column">
     <label for="" class="py-2">Email</label>
-    <input type="text" class="p-2 w-75 m-auto" formControlName="email">
+    <input type="text" class="p-2 w-75 m-auto" [ngClass]="login.controls['email'].invalid&&submitted==true?'error':''" formControlName="email">
+    <p class="errors" *ngIf="login.controls['email'].invalid&&submitted==true">Email non valida</p>
   </div>
   <div class="col-md-6 d-flex flex-column">
     <label for="" class="py-2">Password</label>
-    <input type="text" class="p-2 w-75 m-auto" formControlName="password">
+    <input type="password" class="p-2 w-75 m-auto" [ngClass]="login.controls['password'].invalid&&submitted==true?'error':''" formControlName="password">
+    <p class="errors" *ngIf="login.controls['password'].invalid&&submitted==true">Password non valida</p>
   </div>
 </div>
     </div>
     <div class="col-md-12 py-5" >
       <div class="w-50 d-flex justify-content-around m-auto">
-         <button class="btn-login">Login</button>
-         <button class="btn-signup" (click)="section='signup'">Signup</button>
+         <button class="btn-login" type="button" (click)="logIn()">Login</button>
+         <button class="btn-signup" (click)="section='signup';submitted=false">Signup</button>
       </div>
     </div>
   </form>
-  <form *ngIf="section=='signup'" class="p-0">
+  <form *ngIf="section=='signup'" [formGroup]="signup" class="p-0">
     <div class="col-md-12 py-5">
           <h1>Benvenuto nella sezione dei form</h1>
-          <h2 >Login</h2>
+          <h2 >Signup</h2>
     </div>
     <div class="col-m-12 py-5 bg-white w-100" style="z-index: 1;">
 
@@ -36,11 +38,14 @@
  <div class="row">
   <div class="col-md-6 d-flex flex-column">
     <label for="" class="py-2">Nome</label>
-    <input type="text" class="p-2 w-75 m-auto" formControlName="nome">
+    <input type="text" class="p-2 w-75 m-auto" [ngClass]="signup.controls['nome'].invalid&&submitted==true?'error':''" formControlName="nome">
+    <p class="errors" *ngIf="signup.controls['nome'].invalid&&submitted==true">Nome non valido, minimo 3 caratteri</p>
   </div>
   <div class="col-md-6 d-flex flex-column">
     <label for="" class="py-2">Cognome</label>
-    <input type="text" class="p-2 w-75 m-auto" formControlName="cognome">
+    <input type="text" class="p-2 w-75 m-auto" [ngClass]="signup.controls['cognome'].invalid&&submitted==true?'error':''" formControlName="cognome">
+        <p class="errors" *ngIf="signup.controls['cognome'].invalid&&submitted==true">Cognome non valido, minimo 3 caratteri</p>
+
   </div>
 </div>
     </div>
@@ -48,24 +53,35 @@
       <div class="row">
         <div class="col-md-6 d-flex flex-column">
           <label for="" class="py-2">Email</label>
-          <input type="text" class="p-2 w-75 m-auto" formControlName="email">
+          <input type="text" class="p-2 w-75 m-auto" [ngClass]="signup.controls['email'].invalid&&submitted==true?'error':''" formControlName="email">
+              <p class="errors" *ngIf="signup.controls['email'].invalid&&submitted==true">Email non valida</p>
+
         </div>
         <div class="col-md-6 d-flex flex-column">
           <label for="" class="py-2">Età</label>
-          <input type="text" class="p-2 w-75 m-auto" formControlName="eta">
+          <input type="number" class="p-2 w-75 m-auto" [ngClass]="signup.controls['eta'].invalid&&submitted==true?'error':''" formControlName="eta">
+              <p class="errors" *ngIf="signup.controls['eta'].invalid&&submitted==true">Età minima 18 anni</p>
+
         </div>
         <div class="col-md-6 d-flex flex-column">
           <label for="" class="py-2">Password</label>
-          <input type="text" class="p-2 w-75 m-auto" formControlName="password">
+          <input type="password" class="p-2 w-75 m-auto" [ngClass]="signup.controls['password'].invalid&&submitted==true?'error':''" formControlName="password">
+              <p class="errors" *ngIf="signup.controls['password'].invalid&&submitted==true">Password non valida</p>
+
         </div>
         <div class="col-md-6 d-flex flex-column">
           <label for="" class="py-2">Ripeti</label>
-          <input type="text" class="p-2 w-75 m-auto" formControlName="ripeti">
+          <input type="password" class="p-2 w-75 m-auto" [ngClass]="signup.controls['ripeti'].invalid&&submitted==true?'error':''" formControlName="ripeti">
+              <p class="errors" *ngIf="signup.controls['ripeti'].invalid&&submitted==true">Password non valida non valida</p>
+              <p class="errors" *ngIf="signup.controls['password'].value!=signup.controls['ripeti'].value&&submitted==true&&
+              signup.controls['password'].valid&&signup.controls['ripeti'].valid
+              ">La password non coincide</p>
+
         </div>
       </div>
       <div class="w-50 d-flex justify-content-around m-auto py-5">
-        <button class="btn-signup" >Signup</button>
-                <button class="btn-login" (click)="section='login'">Login</button>
+        <button class="btn-signup" type="button" (click)="signUp()">Signup</button>
+                <button class="btn-login" (click)="section='login';submitted=false">Login</button>
      </div>
     </div>
   </form>

@@ -10,6 +10,7 @@ import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-br
 import { ToastrModule, provideToastr } from 'ngx-toastr';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FooterComponent } from './components/footer/footer.component';
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-    })
+    }),
+    HttpClientModule
   ],
   providers: [ provideAnimations(),
     provideToastr(),],
