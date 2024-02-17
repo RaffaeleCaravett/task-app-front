@@ -3,5 +3,21 @@
     <div class="col-md-12 py-5">
       <h1>Here's your calendar</h1>
     </div>
+    <div class="col-md-12 py-5 p-2 text-center" *ngIf="calendar">
+      <div class="border rounded shadow p-2 bg-light">
+        <h1>Calendario {{calendar.anno}}</h1>
+        <div class="row w-100">
+          <div class="col-md-3 p-2" *ngFor="let m of calendar.meseList">
+          <div class="border rounded p-1 text-center">
+<h2>{{m.nomeMese}}</h2>
+<div class=" m-auto row  w-100 text-center py-2">
+  <div class="px-1" style="width: 14%;" *ngFor="let g of nomiGiorniArray">{{g}}</div>
+<div class="py-1 px-1 border" style="width: 14%;" *ngFor="let c of caselleArray"></div>
+</div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

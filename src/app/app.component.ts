@@ -23,10 +23,11 @@ export class AppComponent implements OnInit{
           localStorage.setItem('user',JSON.stringify(user))
           this.authService.authenticateUser(true)
           this.authService.token=localStorage.getItem('accessToken')!
+          console.log(this.authService.token)
           if(localStorage.getItem('refreshToken')){
             this.authService.refreshToken=localStorage.getItem('refreshToken')!
           }
-          this.router.navigate(['/task',0])
+          this.router.navigate(['/task',user.id])
         }
       },err=>{
         this.authService.verifyRefreshToken(localStorage.getItem('refreshToken')!).subscribe((tokens:any)=>{
@@ -37,7 +38,7 @@ export class AppComponent implements OnInit{
                 localStorage.setItem('user',JSON.stringify(user))
                 this.authService.authenticateUser(true)
                 this.authService.token=tokens.accessToken
-                this.router.navigate(['/task',0])
+                this.router.navigate(['/task',user.id])
               }
             },err=>{
               this.authService.authenticateUser(false)

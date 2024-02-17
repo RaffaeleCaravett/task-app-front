@@ -45,7 +45,6 @@ logIn(){
     }).subscribe({
     next: (tokens:any)=>{
 if(tokens){
-  console.log(tokens.tokens)
   this.authService.token=tokens.tokens.accessToken
   this.authService.refreshToken=tokens.tokens.refreshToken
   this.authService.authenticateUser(true)
@@ -54,7 +53,7 @@ if(tokens){
   this.authService.verifyToken(this.authService.token).subscribe((data:any)=>{
     if(data){
       localStorage.setItem('user',JSON.stringify(data))
-      this.router.navigate(['/task',0])
+      this.router.navigate(['/task',data.id])
     }
   })
 }
