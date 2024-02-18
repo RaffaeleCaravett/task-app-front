@@ -20,6 +20,7 @@ caselle:number=38
 caselleArray:any[]=[]
 nomiGiorniArray:any[]=[]
 firstDaysArray:any[]=[]
+currentYear:number=0
   constructor(private route:ActivatedRoute,
     private toastr:ToastrService,private router:Router,private taskService:TaskService,private matDialog:MatDialog){}
 
@@ -30,9 +31,9 @@ firstDaysArray:any[]=[]
 for(let i = 1;i<=this.caselle;i++){
   this.caselleArray.push(i)
 }
-let currentYear:number = new Date().getFullYear();
+this.currentYear= new Date().getFullYear();
 for(let month=0;month<=11;month++){
-  let firstDay =    new Date(currentYear,month,1).getDay()
+  let firstDay =    new Date(this.currentYear,month,1).getDay()
 let firstDayName=''
   switch(firstDay){
   case 0 :
@@ -72,14 +73,19 @@ firstDayName='Domenica';
  firstDay
     )
 }
-console.log(this.firstDaysArray[0].firstDayNumber)
         this.route.params.subscribe(params => {
           this.taskService.getUserById(params['id']).subscribe((user:any)=>{
             this.user=user
-           this.taskService.getCalendarioByUserIdAndYear(currentYear,user.id).subscribe((calendar:any)=>{
+           this.taskService.getCalendarioByUserIdAndYear(this.currentYear,user.id).subscribe((calendar:any)=>{
             if(calendar){
               this.calendar=calendar
-
+if(this.calendar.tipoAnno=="BISESTILE"){
+  this.calendar.meseList.forEach((mese:any)=>{
+    if(mese.nomeMese=='FEBBRAIO'){
+      mese.giorni=29
+    }
+  })
+}
             }
            },err=>{
             this.toastr.show(err.error.message)
@@ -90,10 +96,9 @@ console.log(this.firstDaysArray[0].firstDayNumber)
 
 
       showDay(dayOfMonth:number,month:number,dayOfWeek:number){
-console.log()
 
-const dialogRef = this.matDialog.open(GiornoComponent,{data:{giornoDelmese:dayOfMonth,mese:month,giornoDellaSettimana:dayOfWeek}})
+const dialogRef = this.matDialog.open(GiornoComponent,{data:{giornoDelmese:dayOfMonth,mese:month,giornoDellaSettimana:dayOfWeek,user:this.user,year:this.currentYear}})
 
-dialogRef.afterClosed().subscribe((result:any)=>{console.log(result)})
+dialogRef.afterClosed().subscribe((result:any)=>{})
       }
 }
