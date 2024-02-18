@@ -6,13 +6,15 @@
     <div class="col-md-12 py-5 p-2 text-center" *ngIf="calendar">
       <div class="border rounded shadow p-2 bg-light">
         <h1>Calendario {{calendar.anno}}</h1>
-        <div class="row w-100">
-          <div class="col-md-3 p-2" *ngFor="let m of calendar.meseList">
+        <div class="row w-100  m-auto">
+          <div class="col-lg-3 col-md-4 p-2" *ngFor="let m of calendar.meseList, index as mI">
           <div class="border rounded p-1 text-center">
 <h2>{{m.nomeMese}}</h2>
 <div class=" m-auto row  w-100 text-center py-2">
   <div class="px-1" style="width: 14%;" *ngFor="let g of nomiGiorniArray">{{g}}</div>
-<div class="py-1 px-1 border" style="width: 14%;" *ngFor="let c of caselleArray"></div>
+<div class="py-1 px-1 border" style="width: 14.2%;height: 42px;" *ngFor="let c of caselleArray,index as i">
+<p *ngIf="i>=firstDaysArray[mI]-1&&i<m.giorni+firstDaysArray[mI]-1"  (click)="showDay(i+1-firstDaysArray[mI]+1,m,i)">{{i+1-firstDaysArray[mI]+1}}</p>
+</div>
 </div>
           </div>
           </div>

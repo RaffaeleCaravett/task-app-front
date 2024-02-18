@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { AppComponent } from "src/app/app.component";
 import { TaskRoutingModule } from "./task-routing.module";
 import { TaskComponent } from "./task.component";
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { TaskComponent } from "./task.component";
   ],
   imports: [
     CommonModule,
-    TaskRoutingModule
+    TaskRoutingModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
