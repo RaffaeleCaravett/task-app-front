@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-giorno',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./giorno.component.scss']
 })
 export class GiornoComponent {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,public dialogRef: MatDialogRef<GiornoComponent>,private toastr:ToastrService) { }
 
 }
