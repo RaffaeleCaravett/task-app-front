@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { TaskService } from 'src/app/services/task.service';
@@ -17,11 +18,28 @@ user:any
 currentYear!:number
 tasks:any[]=[]
 canAdd:boolean=false
+taskForm!:FormGroup
+open:boolean=false
+times:any[]=[]
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,public dialogRef: MatDialogRef<GiornoComponent>,private toastr:ToastrService,
   private taskService:TaskService) { }
 
 
   ngOnInit(): void {
+
+    for (let hour = 0; hour < 24; hour++) {
+      for (let minute = 0; minute < 60; minute += 15) {
+        const formattedHour = hour.toString().padStart(2, '0');
+        const formattedMinute = minute.toString().padStart(2, '0');
+        this.times.push(`${formattedHour}:${formattedMinute}`);
+      }
+    }
+this.taskForm=new FormGroup({
+  testo:new FormControl('',Validators.required),
+  ora:new FormControl('',Validators.required)
+})
+
+
     let today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     let openedDate = new Date(this.data.year, this.data.mese.id-1, this.data.giornoDelmese);
    if(today<=openedDate){
@@ -72,9 +90,37 @@ if(this.giornoDellaSettimana==0||this.giornoDellaSettimana==7||this.giornoDellaS
       );
 
 }
-addTask(){
-if(this.canAdd){
-
+openTask(){
+this.open=true
 }
+closeTask(){
+  this.open=false
+}
+
+saveTask(){
+  console.log('ihih')
+  if(this.taskForm.valid){
+    console.log('uhuh')
+    this.taskService.saveTask(
+      {
+        testo:this.taskForm.controls['testo'].value,
+        mese:this.mese.id,
+        giornoDelMese:this.giornoDelMese,
+        giornoDellaSettimana:this.giornoDellaSettimana,
+        giornoDellaSettimanaNome:this.giornoDellaSettimanaNome,
+        ora:this.taskForm.controls['ora'].value,
+        mese_id:this.mese.id,
+        user_id:this.user.id
+      }
+    ).subscribe({
+      next: (data:any)=>{
+     console.log(data)
+      },
+      error: (err:any)=>{
+        this.toastr.show(err.error.message)
+      },
+      complete: () => { }
+    })
+  }
 }
 }

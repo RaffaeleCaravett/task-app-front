@@ -8,7 +8,20 @@
 <p *ngIf="!tasks||tasks.length==0" class="fs-5">Non ci sono task per questo giorno</p>
   </div>
   <div class="p-2">
-    <button class="btn fs-3" (click)="addTask()" *ngIf="canAdd">➕</button>
+    <button class="btn fs-3" (click)="openTask()" *ngIf="canAdd&&!open">➕</button>
+    <div class="p-1" *ngIf="open">
+      <form [formGroup]="taskForm">
+      <label for="">Cosa devi fare?</label>
+      <input type="text" formControlName="testo" class="form-control">
+      <label for="">A che ora?</label>
+      <select type="text" formControlName="ora" class="form-select" >
+      <option value=""></option>
+      <option value="{{t}}" *ngFor="let t of times">{{t}}</option>
+      </select>
+      <button class="btn my-2" (click)="saveTask()">Inserisci task</button>
+    </form>
+    </div>
+    <button class="btn fs-3" (click)="closeTask()" *ngIf="canAdd&&open">➖</button>
   </div>
 </div>
 </div>
