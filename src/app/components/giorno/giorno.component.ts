@@ -21,6 +21,8 @@ canAdd:boolean=false
 taskForm!:FormGroup
 open:boolean=false
 times:any[]=[]
+showModifyButton:boolean=true
+selectedTask:any
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,public dialogRef: MatDialogRef<GiornoComponent>,private toastr:ToastrService,
   private taskService:TaskService) { }
 
@@ -84,6 +86,9 @@ this.open=true
 }
 closeTask(){
   this.open=false
+  this.showModifyButton=false
+  this.selectedTask=undefined
+  this.taskForm.reset()
 }
 
 saveTask(){
@@ -102,6 +107,7 @@ saveTask(){
     ).subscribe({
       next: (data:any)=>{
      if(data){
+      this.taskForm.reset()
 this.getTasks()
      }
       },
@@ -128,7 +134,6 @@ getTasks(){
     );
 }
 deleteTask(task:any){
-console.log(task)
   this.taskService.deleteTaskById(task.id).subscribe({
 next: (tasks:any)=>{
   console.log(tasks)
@@ -139,5 +144,35 @@ error: (err:any)=>{
 },
 complete: () => { }
   })
+}
+
+modifyTask(task:any){
+  this.selectedTask=task
+  this.open=true
+  this.taskForm.controls['testo'].setValue(task.testo)
+  this.taskForm.controls['ora'].setValue(task.ora)
+  this.taskForm.updateValueAndValidity()
+  this.showModifyButton=true
+}
+sendModifiedTask(){
+this.taskService.putTaskById(this.selectedTask.id,this.currentYear,
+  {
+    testo:this.taskForm.controls['testo'].value,
+    mese:this.mese.id,
+    giornoDelMese:this.giornoDelMese,
+    giornoDellaSettimana:this.giornoDellaSettimana,
+    giornoDellaSettimanaNome:this.giornoDellaSettimanaNome,
+    ora:this.taskForm.controls['ora'].value,
+    mese_id:this.mese.id,
+    user_id:this.user.id
+  }).subscribe({
+  next: (tasks:any)=>{
+    this.getTasks()
+  },
+  error: (err:any)=>{
+    this.toastr.show(err.error.message||'Qualcosa è andato storto nella modifica del dato')
+  },
+  complete: () => { }
+    })
 }
 }

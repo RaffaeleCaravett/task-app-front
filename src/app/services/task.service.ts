@@ -30,8 +30,8 @@ saveTask(year:number,task:any){
 getTaskById(id:number){
   return this.http.get(environment.API_URL+this.task+`/${id}`)
 }
-putTaskById(id:number,task:any){
-  return this.http.put(environment.API_URL+this.task+`/${id}`,task)
+putTaskById(id:number,year:any,task:any){
+  return this.http.put(environment.API_URL+this.task+`/${id}/${year}`,task)
 }
 deleteTaskById(id:number){
   return this.http.delete(environment.API_URL+this.task+`/${id}`)
