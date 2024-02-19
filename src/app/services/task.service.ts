@@ -20,12 +20,12 @@ getUserById(id:number){
 getCalendarioByUserIdAndYear(anno:number,user:number){
   return this.http.get(environment.API_URL+this.calendario+`/annoUser/${anno}/${user}`)
 }
-getTaskByMeseYearAndUser(mese:number,year:string,user:number){
-return this.http.get(environment.API_URL+this.task+`/meseAndYearAndUser/${user}/${mese}/${user}`)
+getTaskByMeseYearAndUserAndGiornoDelMese(mese:number,user:number,year:string,giornoDelMese:number){
+return this.http.get(environment.API_URL+this.task+`/meseAndYearAndUserAndGiornoDelMese/${mese}/${user}/${year}/${giornoDelMese}`)
 }
 
-saveTask(task:any){
-  return this.http.post(environment.API_URL+this.task,task)
+saveTask(year:number,task:any){
+  return this.http.post(environment.API_URL+this.task+`/${year}`,task)
 }
 getTaskById(id:number){
   return this.http.get(environment.API_URL+this.task+`/${id}`)

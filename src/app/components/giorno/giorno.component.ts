@@ -76,18 +76,7 @@ if(this.giornoDellaSettimana==0||this.giornoDellaSettimana==7||this.giornoDellaS
                 this.giornoDellaSettimanaNome='Lunedì'
       }
 
-      this.taskService.getTaskByMeseYearAndUser(this.mese.id,this.user.id,this.currentYear).subscribe({
-      next: (tasks:any)=>{
-    this.tasks=tasks
-      },
-      error: (err:any)=>{
-        this.toastr.show(err.error.message)
-      },
-      complete: () => { }
-    }
-
-
-      );
+      this.getTasks()
 
 }
 openTask(){
@@ -98,10 +87,8 @@ closeTask(){
 }
 
 saveTask(){
-  console.log('ihih')
   if(this.taskForm.valid){
-    console.log('uhuh')
-    this.taskService.saveTask(
+    this.taskService.saveTask(this.currentYear,
       {
         testo:this.taskForm.controls['testo'].value,
         mese:this.mese.id,
@@ -114,13 +101,30 @@ saveTask(){
       }
     ).subscribe({
       next: (data:any)=>{
-     console.log(data)
+     if(data){
+this.getTasks()
+     }
       },
       error: (err:any)=>{
-        this.toastr.show(err.error.message)
+        this.toastr.show(err.error.message||"E' possibile che tu abbia già un task a quest'ora.")
       },
       complete: () => { }
     })
   }
+}
+getTasks(){
+  this.taskService.getTaskByMeseYearAndUserAndGiornoDelMese(this.mese.id,this.user.id,String(this.currentYear),this.giornoDelMese).subscribe({
+    next: (tasks:any)=>{
+      this.tasks=[]
+  this.tasks=tasks
+    },
+    error: (err:any)=>{
+      this.toastr.show(err.error.message)
+    },
+    complete: () => { }
+  }
+
+
+    );
 }
 }
