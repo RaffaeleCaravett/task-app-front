@@ -21,9 +21,9 @@ export class AppComponent implements OnInit{
       this.authService.verifyToken(localStorage.getItem('accessToken')!).subscribe((user:any)=>{
         if(user){
           localStorage.setItem('user',JSON.stringify(user))
+          this.authService.setUser(localStorage.getItem('user')!)
           this.authService.authenticateUser(true)
           this.authService.token=localStorage.getItem('accessToken')!
-          console.log(this.authService.token)
           if(localStorage.getItem('refreshToken')){
             this.authService.refreshToken=localStorage.getItem('refreshToken')!
           }
@@ -31,11 +31,11 @@ export class AppComponent implements OnInit{
         }
       },err=>{
         this.authService.verifyRefreshToken(localStorage.getItem('refreshToken')!).subscribe((tokens:any)=>{
-          console.log(tokens.accessToken)
           if(tokens){
             this.authService.verifyToken(tokens.accessToken).subscribe((user:any)=>{
               if(user){
                 localStorage.setItem('user',JSON.stringify(user))
+                this.authService.setUser(localStorage.getItem('user')!)
                 this.authService.authenticateUser(true)
                 this.authService.token=tokens.accessToken
                 this.router.navigate(['/task',user.id])

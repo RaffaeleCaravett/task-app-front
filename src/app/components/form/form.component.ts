@@ -53,6 +53,7 @@ if(tokens){
   this.authService.verifyToken(this.authService.token).subscribe((data:any)=>{
     if(data){
       localStorage.setItem('user',JSON.stringify(data))
+      this.authService.setUser(localStorage.getItem('user')!)
       this.router.navigate(['/task',data.id])
     }
   })

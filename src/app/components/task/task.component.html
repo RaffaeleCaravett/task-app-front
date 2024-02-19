@@ -13,7 +13,8 @@
 <div class=" m-auto row  w-100 text-center py-2">
   <div class="px-1" style="width: 14%;" *ngFor="let g of nomiGiorniArray">{{g}}</div>
 <div class="py-1 px-1 border" style="width: 14.2%;height: 42px;" *ngFor="let c of caselleArray,index as i">
-<p *ngIf="i>=firstDaysArray[mI]-1&&i<m.giorni+firstDaysArray[mI]-1"  (click)="showDay(i+1-firstDaysArray[mI]+1,m,i)">{{i+1-firstDaysArray[mI]+1}}</p>
+<p *ngIf="i>=firstDaysArray[mI]-1&&i<m.giorni+firstDaysArray[mI]-1"  (click)="showDay(i+1-firstDaysArray[mI]+1,m,i)">{{i+1-firstDaysArray[mI]+1}}
+</p>
 </div>
 </div>
           </div>

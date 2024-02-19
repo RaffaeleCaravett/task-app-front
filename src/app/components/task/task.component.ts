@@ -79,6 +79,7 @@ firstDayName='Domenica';
            this.taskService.getCalendarioByUserIdAndYear(this.currentYear,user.id).subscribe((calendar:any)=>{
             if(calendar){
               this.calendar=calendar
+              console.log(calendar)
 if(this.calendar.tipoAnno=="BISESTILE"){
   this.calendar.meseList.forEach((mese:any)=>{
     if(mese.nomeMese=='FEBBRAIO'){

@@ -15,7 +15,7 @@ export class AuthService {
   public token:string=''
   public refreshToken:string=''
   public subj:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
+  public user:BehaviorSubject<any> = new BehaviorSubject<any>('');
 constructor(private http:HttpClient, private authGuard:AuthGuard){}
 
 logIn(body:{}){
@@ -40,4 +40,9 @@ this.subj.next(bool)
               verifyRefreshToken(refreshToken:string){
                 return this.http.get(environment.API_URL+'/auth/refreshToken/'+refreshToken)
               }
+
+setUser(user:any){
+  this.user.next(JSON.parse(user))
+}
+
 }

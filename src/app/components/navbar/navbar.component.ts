@@ -9,18 +9,20 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-
+user:any
 constructor(private router:Router,private authGuard :AuthGuard,private authService:AuthService){
 this.authService.subj.subscribe((bool:any)=>{
   this.isAuthenticated=bool
 })
-
+this.authService.user.subscribe((user:any)=>{
+  this.user=user
+})
 }
 
 isAuthenticated:boolean=false
 
   goToRoute(route:string){
-    this.router.navigate([`/${route}`,0])
+    this.router.navigate([`/${route}`,this.user.id])
 this.isAuthenticated=this.authGuard.isAuthenticated
   }
   logout(){

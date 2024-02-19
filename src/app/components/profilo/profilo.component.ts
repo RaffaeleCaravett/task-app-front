@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ProfiloService } from 'src/app/services/profilo.service';
 
 @Component({
   selector: 'app-profilo',
@@ -8,16 +9,35 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./profilo.component.scss']
 })
 export class ProfiloComponent {
+
+  user:any
+  calendario:any[]=[]
+  tasks:any[]=[]
   constructor(private route:ActivatedRoute,
-    private toastr:ToastrService,private router:Router){}
+    private toastr:ToastrService,private router:Router,private profiloService:ProfiloService){}
 
       ngOnInit(): void {
-
-        if(localStorage.getItem('user')){
-
-        }
         this.route.params.subscribe(params => {
-          console.log(params['id'])
+
+this.profiloService.getUserById(params['id']).subscribe((user:any)=>{
+  this.user=user
+this.profiloService.getCalendarioByUserId(this.user.id).subscribe((calendario:any)=>{
+if(calendario){
+  this.calendario=calendario
+  for(let c of calendario){
+    for(let mese of c.meseList){
+
+    this.profiloService.getAllTasksByUserId(this.user.id).subscribe((tasks:any)=>{
+      if(tasks){
+        this.tasks=tasks
+      }
+    })
+  }
+  }
+
+}
+})
+})
         })
       }
 }
