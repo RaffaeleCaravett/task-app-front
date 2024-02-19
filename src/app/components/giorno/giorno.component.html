@@ -3,9 +3,9 @@
 <div class="p-2 bg-transparent">
   <h2>{{giornoDellaSettimanaNome + " " }} <span class="fs-6">{{" - " +  user.nome + " " + user.cognome}}</span></h2>
   <div style="height:200px;" class="position-relative  bg-transparent overflow-auto">
-<h1 class="position-absolute top-50 start-50 translate-middle" style="z-index: 0;color: rgba(0,0,0,0.5);">{{giornoDelMese}}</h1>
-<p *ngFor="let t of tasks" class="fs-4 fs-bold">{{t.testo + " - " + t.ora}}</p>
-<p *ngIf="!tasks||tasks.length==0" class="fs-5">Non ci sono task per questo giorno <button class="btn"></button></p>
+<h1 class="position-absolute top-50 start-50 translate-middle" style="z-index: 0;color: rgba(0,0,0,0.1);">{{giornoDelMese}}</h1>
+<p *ngFor="let t of tasks" class="fs-4 fs-bold">{{t.testo + " - " + t.ora}} <button class="btn fs-5 py-0 my-0" (click)="deleteTask(t)">❌</button></p>
+<p *ngIf="!tasks||tasks.length==0" class="fs-5">Non ci sono task per questo giorno </p>
   </div>
   <div class="p-2">
     <button class="btn fs-3" (click)="openTask()" *ngIf="canAdd&&!open">➕</button>

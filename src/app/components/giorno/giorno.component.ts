@@ -127,4 +127,17 @@ getTasks(){
 
     );
 }
+deleteTask(task:any){
+console.log(task)
+  this.taskService.deleteTaskById(task.id).subscribe({
+next: (tasks:any)=>{
+  console.log(tasks)
+  this.getTasks()
+},
+error: (err:any)=>{
+  this.toastr.show(err.error.message||'Qualcosa è andato storto nella cancellazione del dato')
+},
+complete: () => { }
+  })
+}
 }
